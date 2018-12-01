@@ -12,7 +12,9 @@ This is a toy example (on CIFAR-10) of how to run attacks presented in https://a
 Running the above gives 
 
 baseline (random guess) accuracy: 0.167
+
 white-box attack accuracy: 0.210
+
 black-box attack accuracy: 0.095
 
 
