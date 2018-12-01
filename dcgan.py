@@ -60,12 +60,8 @@ data_transform = transforms.Compose([
 
 ])
 
-trainset = dset.CIFAR10(root=opt.dataroot, train=True, download=True, transform=data_transform)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=opt.batchSize, shuffle=True, num_workers=int(opt.workers))
-
 testset = dset.CIFAR10(root=opt.dataroot, train=False, download=True, transform=data_transform)
 testloader = torch.utils.data.DataLoader(testset, batch_size=opt.batchSize, shuffle=True, num_workers=int(opt.workers))
-
 
 device = torch.device("cuda:0" if opt.cuda else "cpu")
 ngpu = int(opt.ngpu)
@@ -97,7 +93,7 @@ optimizerD = optim.Adam(netD.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
 optimizerG = optim.Adam(netG.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
 
 for epoch in range(opt.niter):
-    for i, data in enumerate(trainloader, 0):
+    for i, data in enumerate(testloader, 0):
         ############################
         # (1) Update D network: maximize log(D(x)) + log(1 - D(G(z)))
         ###########################
@@ -135,7 +131,7 @@ for epoch in range(opt.niter):
         optimizerG.step()
 
         print('[%d/%d][%d/%d] Loss_D: %.4f Loss_G: %.4f D(x): %.4f D(G(z)): %.4f / %.4f'
-              % (epoch, opt.niter, i, len(trainloader),
+              % (epoch, opt.niter, i, len(testloader),
                  errD.item(), errG.item(), D_x, D_G_z1, D_G_z2))
         if i % 100 == 0:
             vutils.save_image(real_cpu,

@@ -84,7 +84,6 @@ def weights_init(m):
         m.weight.data.normal_(1.0, 0.02)
         m.bias.data.fill_(0)
 
-
 netBBG = Generator(ngpu, nz, ngf, nc).to(device)
 netBBG.load_state_dict(torch.load(opt.netBBG))
 
@@ -124,9 +123,8 @@ for i, data in enumerate(testloader, 0):
     output = list(zip(output, ['test' for _ in range(len(output))]))
     wb_predictions.extend(output)
 
-wb_predictions = wb_predictions
-wb_predictions = [x[1] for x in sorted(wb_predictions, reverse=True)[:len(trainset)]]
-wb_accuracy = wb_predictions.count('train')/float(len(trainset))
+wb_predictions = [x[1] for x in sorted(wb_predictions, reverse=True)[:len(testset)]]
+wb_accuracy = wb_predictions.count('test')/float(len(testset))
 
 ##### Black-box attack ####
 # Trains another GAN on the output of the black-box
@@ -222,11 +220,10 @@ for i, data in enumerate(testloader, 0):
     output = list(zip(output, ['test' for _ in range(len(output))]))
     bb_predictions.extend(output)
 
-bb_predictions = bb_predictions
-bb_predictions = [x[1] for x in sorted(bb_predictions, reverse=True)[:len(trainset)]]
-bb_accuracy = bb_predictions.count('train')/float(len(trainset))
-
-print("baseline (random guess) accuracy: {:.3f}".format(len(trainset)/float(len(trainset)+len(testset))))
+bb_predictions = [x[1] for x in sorted(bb_predictions, reverse=True)[:len(testset)]]
+bb_accuracy = bb_predictions.count('test')/float(len(testset))
+print()
+print("baseline (random guess) accuracy: {:.3f}".format(len(testset)/float(len(trainset)+len(testset))))
 print("white-box attack accuracy: {:.3f}".format(wb_accuracy))
 print("black-box attack accuracy: {:.3f}".format(bb_accuracy))
 
