@@ -4,18 +4,18 @@ This is a toy example (on CIFAR-10) of how to run attacks presented in https://a
 
 ## To run
 
-1. Train a GAN on CIFAR-10 by `python dcgan.py --outf ./models --dataroot ./data --cuda --niter 20`
-2. Run attack by `python attack.py --outf ./models --dataroot ./data --niter 1000 --cuda --netBBG ./models/netG_epoch_19.pth --netBBD ./models/netD_epoch_19.pth`
+1. Train a GAN on CIFAR-10 by `python dcgan.py --outf ./models --dataroot ./data --cuda --niter 50`
+2. Run attack by `python attack.py --outf ./models --dataroot ./data --niter 10000 --cuda --netBBG ./models/netG_epoch_49.pth --netBBD ./models/netD_epoch_49.pth`
 
 ## Results:
 
-Running the above gives 
+Running the above gives approx:
 
 baseline (random guess) accuracy: 0.167
 
-white-box attack accuracy: 0.210
+white-box attack accuracy: 0.260
 
-black-box attack accuracy: 0.095
+black-box attack accuracy: 0.317
 
 
 ## Notes:
