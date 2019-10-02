@@ -207,7 +207,7 @@ bb_predictions = []
 # loop over training data
 for i, data in enumerate(trainloader, 0):
     real_cpu = data[0].to(device)
-    output = netBBD(real_cpu)
+    output = netWBD(real_cpu)
     output = [x for x in output.detach().cpu().numpy()]
     output = list(zip(output, ['train' for _ in range(len(output))]))
     bb_predictions.extend(output)
